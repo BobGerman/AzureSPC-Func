@@ -11,7 +11,11 @@ namespace AddCommentCS
         // Timer - "0 0 */2 * * *" is chron for every 2 hours
         //         "0 0 0 * * *" is once a day
         [FunctionName("AddCommentCS")]
-        public static void Run([TimerTrigger("0 0 0 * * *")]TimerInfo myTimer, TraceWriter log)
+        public static void Run([TimerTrigger("0 0 0 * * *"
+#if DEBUG
+            , RunOnStartup=true
+#endif
+            )]TimerInfo myTimer, TraceWriter log)
         {
             string siteUrl = Environment.GetEnvironmentVariable("SiteUrl");
             string comment = Environment.GetEnvironmentVariable("Comment");
